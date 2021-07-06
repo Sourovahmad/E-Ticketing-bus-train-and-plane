@@ -8,7 +8,7 @@
         </button>
 
         <!-- Topbar Search -->
-        <div class="adminTitle" >E - ticket system</div>
+        <div class="adminTitle h4" style = "text-transform:capitalize;">E Ticket </div>
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
 

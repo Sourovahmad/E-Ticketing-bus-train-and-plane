@@ -186,6 +186,7 @@
 
     <input type="text" value="MR. X" name="name" id="ticketCartPassengerNameInput"  hidden  >
     <input type="text"  value="01"  name="phone" id="ticketCartPassengerPhoneInput"  hidden  >
+    <input type="text"  value="{{ Auth::user()->id }}"  name="user_id"   hidden  >
 
 </form>
 

@@ -1,6 +1,7 @@
-@extends('tpl.includes.app')
+@extends('customer.includes.app')
 
 @section('content')
+
 
 
 
@@ -19,46 +20,45 @@
             <div class=" mb-4  text-center  bg-dark-color p-2  ">
                 <div class="card border-none   bg-dark-color    p-2 ">
 
-                    <h3 class="text-white"> Passenger information</h3>
-
-                    <div class="card-body ">
-
-                        <form>
-                            @csrf
-                            <div class="form-row align-items-center">
-                                <div class="col-6 col-md-6">
-                                    <span class=" pl-2"> Name</span>
-                                    <input type="text" class="form-control mb-2" id="ticketCartPassengerName" required>
-                                </div>
-                                <div class="col-12 col-md-6">
-
-                                    <span class=" pl-2">phone</span>
-                                    <input type="text" class="form-control mb-2" id="ticketCartPassengerPhone" required>
-                                </div>
-
-
-
-                            </div>
-
-                        </form>
-
-
-                    </div>
-
-
-
-
-                </div>
-            </div>
-
-
-
- 
-            <div class=" mb-4  text-center  bg-dark-color p-2  ">
-                <div class="card border-none   bg-dark-color    p-2 ">
-
                     <h3 class="text-white"> Cart</h3>
                     <div class="card-body ">
+
+
+
+
+
+
+                        
+                        <div class="row" id="payment_system">
+                            <div class="form-check col-4 p-4 ">
+                                <input class="form-check-input " type="radio" name="exampleRadios" id="account_type"
+                                    value="option1" checked>
+                                <label class="form-check-label" for="account_type">
+                                    <img src="{{ asset('img/bkash.png') }}" alt="bkash" width="70px">
+                                </label>
+                            </div>
+
+                            <div class="form-check col-4 p-4">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="account_type"
+                                    value="option1" >
+                                <label class="form-check-label" for="account_type">
+                                    <img src="{{ asset('img/rocket.jpg') }}" alt="bkash" width="70px">
+                                </label>
+                            </div>
+
+                            <div class="form-check col-4 p-4">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="account_type"
+                                    value="option1" >
+                                <label class="form-check-label" for="account_type">
+                                    <img src="{{ asset('img/nogod.png') }}" alt="bkash" width="70px">
+                                </label>
+                            </div>
+                            <div class="form-check col-12 pb-4">
+                                
+                                
+                                <input class="form-control" type="tel" name="account_no" id="account_no" placeholder="Account No">
+                            </div>
+                        </div>
 
 
 
@@ -79,9 +79,7 @@
 
                                     <span class=" pl-2">Total Ticket</span>
                                     <select class="form-control form-control" name="total_ticket" id='total_ticket_number' required>
-                                        {{-- <option selected disabled>Select Seat </option> --}}
-                                        {{-- <option value="1"> 1 </option>
-                                        <option value="2"> 2 </option> --}}
+                                        
                                     </select>
                                 </div>
 
@@ -131,48 +129,7 @@
 
 
 
-            <div class=" mb-4  text-center  bg-dark-color p-2 ">
-                <div class="card border-none   bg-dark-color    p-2">
-                    <h3 class="text-white"> Schedule</h3>
-
-                    <div class="card-body">
-
-
-
-
-
-                        <div class="col-auto">
-
-
-                            {{-- <span class="text-light pl-2">Schedule</span> --}}
-
-                            <select class="form-control form-control" name="road_id" id='schedulePassengerPageSelectSchedule' required>
-                                <option selected>Select Schedule </option>
-                                @foreach ($schedules as $schedule)
-                                @php
-                                    $schedule->abasas();
-                                @endphp
-                                <option value={{$schedule->id}}> {{$schedule->to_destination }} - {{$schedule->schedule }}  </option>
-                                @endforeach
-                            </select>
-
-                        </div>
-                        
-
-
-
-
-
-
-
-
-                    </div>
-
-
-
-
-                </div>
-            </div>
+        
 
 
 
@@ -234,14 +191,15 @@
 <form action="{{ route('tpl-schedule-seat') }}" method="post" id="ticketSubmitForm">
 
     @csrf
-    <input type="number" name="tpl_schedule_id" id="tpl_schedule_id"  hidden  >
+    <input type="number" name="tpl_schedule_id" id="tpl_schedule_id"  value="{{ $schedule->id }}" hidden  >
 
     <input type="number" name="tpl_total_seat" id="tpl_total_seat"  hidden  >
     
     <input type="number" name="tpl_seat_id" id="tpl_seat_id"  hidden  >
 
-    <input type="text" value="MR. X" name="name" id="ticketCartPassengerNameInput"  hidden  >
-    <input type="text"  value="01"  name="phone" id="ticketCartPassengerPhoneInput"  hidden  >
+    <input type="text" value="{{ Auth::user()->name }}" name="name" id="ticketCartPassengerNameInput"  hidden  >
+    <input type="text"  value="{{ Auth::user()->phone }}"  name="phone" id="ticketCartPassengerPhoneInput"  hidden  >
+    <input type="text"  value="{{ Auth::user()->id }}"  name="user_id"   hidden  >
 
 </form>
 
@@ -264,7 +222,7 @@
                         <div class="card-header bg-dark-color">
 
     
-                            <h3 class="text-white " id="companyOnTicket"></h3>
+                            <h3 class="text-white " id="companyOnTicket"> {{ $schedule->company->name }}</h3>
                         </div>
                         <div class="card-body" >
                                 
@@ -274,23 +232,23 @@
 
                                 <tr>
                                     <td> Passenger Name : </td>
-                                    <td id="passengerNameOnTicket"> </td>
+                                    <td id="passengerNameOnTicket">{{ Auth::user()->name }} </td>
                                 </tr>
                                 <tr>
                                     <td> Passenger Phone : </td>
-                                    <td id="passengerPhoneOnTicket"></td>
+                                    <td id="passengerPhoneOnTicket">{{ Auth::user()->phone }}</td>
                                 </tr>
                                 <tr>
                                     <td> Schedule : </td>
-                                    <td id="scheduleOnTicket"></td>
+                                    <td id="scheduleOnTicket">{{ $schedule->schedule }}</td>
                                 </tr>
                                 <tr>
                                     <td> From : </td>
-                                    <td id="fromDestinationOnTicket"> </td>
+                                    <td id="fromDestinationOnTicket">{{ $schedule->from_destination }} </td>
                                 </tr>
                                 <tr>
                                     <td> To : </td>
-                                    <td id="toDestinationOnTicket"> </td>
+                                    <td id="toDestinationOnTicket">{{ $schedule->to_destination }}  </td>
                                 </tr>
                                 <tr>
                                     <td> Seats : </td>
@@ -324,10 +282,14 @@ $(document).ready(function () {
 var cartArray = {};
 var ticketCost = 0;;
 var scheduleSeatData ;
-
+var schedule = @json($schedule);
 
 
 $(document).on('click','#ticketSubmitBtn',function(){
+    var account = $('#account_no').val();
+    var len = account.length;
+    if(len>=11){
+        
     var data = $('#ticketSubmitForm').serialize();
     var action =  $('#ticketSubmitForm').attr('action');
     $.ajax({
@@ -335,13 +297,8 @@ $(document).on('click','#ticketSubmitBtn',function(){
             url: action,
             data: data,
             success: function (successData) {
-                $('#companyOnTicket').text(successData.company_name);
-                $('#passengerNameOnTicket').text(successData.customer_name);
-                $('#passengerPhoneOnTicket').text(successData.customer_phone);
-                $('#scheduleOnTicket').text(successData.schedule);
-                $('#fromDestinationOnTicket').text(successData.from_destination);
-                $('#toDestinationOnTicket').text(successData.to_destination);
                 $('#SeatsOnTicket').text(successData.seats_name);
+                console.log(successData);
                 $("#create-ticket-reload-modal").modal();
 
 
@@ -351,27 +308,21 @@ $(document).on('click','#ticketSubmitBtn',function(){
             alert('Error');
             console.log(data);
             },
-        });
+    });
+
+
+    }
+    else{
+        alert('Enter Valid Payment Account');
+    }
+
+
 
 });
 
 
 
 
-
-
-            
-$("#ticketCartPassengerName").change(function () {
-
-    $("#ticketCartPassengerNameInput").val($("#ticketCartPassengerName").val());
-
-});
-
-$("#ticketCartPassengerPhone").change(function () {
-
-    $("#ticketCartPassengerPhoneInput").val($("#ticketCartPassengerPhone").val());
-
-});
 
 
 
@@ -428,7 +379,7 @@ $(document).on('input','#total_ticket_number',function(){
 
 function printScheduleSeat(){
   var home = "{{route('home')}}";  
-  var link = home.trim() + "/tpl-schedule-available-seat-list?tpl_schedule_id=" + $("#schedulePassengerPageSelectSchedule").val();
+  var link = home.trim() + "/tpl-schedule-available-seat-list?tpl_schedule_id=" + schedule.id;
   console.log("link")
   console.log(link)
   console.log("link")
@@ -461,21 +412,20 @@ dropdown+=" <option value="+ value.id + "> "+ key +"  </option>"
 
     printScheduleSeat();
 
-    $("#schedulePassengerPageSelectSchedule").change(function () {
         $('#ticketSubmitBtn').hide();
         $('#total_ticket_cost_div').hide();
         $("#seatTypeDropdown").html('');
         $('#total_ticket_number').html('');
-        $('#tpl_schedule_id').val($("#schedulePassengerPageSelectSchedule").val());
-        printScheduleSeat();
 
 
-    });
 
   });
 
 
 </script>
+
+
+
 
 
 

@@ -2,26 +2,32 @@
 <ul class="navbar-nav bg-dark-color  sidebar sidebar-dark accordion sidebar-toggled " id="accordionSidebar">
 
 
-    <hr class="sidebar-divider m-1 p-0 ">
-
-
      <li class="nav-item  ">
-        <a class="nav-link p-3 " href="">
+        <a class="nav-link p-3 " href="{{ route('tickets','bus') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Companies`</span></a>
+            <span>Bus </span></a>
     </li> 
-
+    <hr class="sidebar-divider m-1 p-0 ">
     <li class="nav-item  ">
-        <a class="nav-link p-3 " href="">
+        <a class="nav-link p-3 " href="{{ route('tickets','train') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Users</span></a>
-    </li>      
-    
-    <li class="nav-item  ">
-        <a class="nav-link p-3 " href="">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Destinations</span></a>
+            <span>Train</span></a>
     </li>  
+    <hr class="sidebar-divider m-1 p-0 ">
+    <li class="nav-item  ">
+        <a class="nav-link p-3 " href="{{ route('tickets','launch') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Launch</span></a>
+    </li>  
+    <hr class="sidebar-divider m-1 p-0 ">
+    <li class="nav-item  ">
+        <a class="nav-link p-3 " href="{{ route('tickets','plane') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Plane</span></a>
+    </li>      
+
+
+
     
   
     {{-- 
